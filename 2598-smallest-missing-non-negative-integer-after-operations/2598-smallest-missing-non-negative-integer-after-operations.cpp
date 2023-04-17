@@ -1,37 +1,27 @@
 class Solution {
 public:
-    int findSmallestInteger(vector<int>& nums, int value)
-    {
-        int n = nums.size();
-
-        vector<int> hash(value,0);
-
-        for(auto i : nums)
-        {
-            int md = i%value;
-
-            if(md<0)
-            {
-                hash[md+value]++;
-            }
-            else
-            {
-                hash[md]++;
-            }
+    int findSmallestInteger(vector<int>& nums, int value) {
+        
+       
+        vector<int>freq(value,0);
+      
+        for(int i=0;i<nums.size();i++){
+             int mod=nums[i]%value;
+            if(mod<0)mod+=value;
+            
+            freq[mod]++;
         }
-
-        int ans = 0;
-
-        for(int i=0;i<=n;i++)
-        {
-            if(hash[i%value]>0) hash[i%value]--;
-            else 
-            {
-                ans = i;
-                break;
+        
+      
+        for(int i=0;i<=nums.size();i++){
+            
+            if(freq[i%value]>0){
+                freq[i%value]--;
             }
+            
+            else return i;
         }
-
-        return ans;
+        
+        return nums.size();
     }
 };
