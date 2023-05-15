@@ -21,13 +21,13 @@ public:
         
        // suffix[nums.size()-1]=nums[nums.size()-1];
         
-        for(int i=nums.size()-1;i>=0;i--){
-            suffix[i]=suffix[i+1]|nums[i];
+        for(int i=nums.size()-2;i>=0;i--){
+            suffix[i]=suffix[i+1]|nums[i+1];
         }
         
         
         for(int i=0;i<nums.size();i++){
-            maxi=max(maxi,prefix[i]|suffix[i+1]|nums[i]*p);
+            maxi=max(maxi,prefix[i]|suffix[i]|nums[i]*p);
         }
         return maxi;
         
