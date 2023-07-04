@@ -1,68 +1,55 @@
 class Solution {
 public:
     
-    void merge(vector<int> &count, vector<pair<int, int>> &v, int left, int mid, int right){
-        vector<pair<int,int>> temp(right - left + 1);
+    void merge(vector<pair<int,int>>&v,vector<int>&count,int left,int mid,int right,vector<int>&nums){
         int i=left;
         int j=mid+1;
         int k=0;
+        vector<pair<int,int>>vec(right-left+1);
         
         while(i<=mid && j<=right){
-            
-            if(v[i].first <= v[j].first){
-                temp[k++] = v[j++];
+            if(v[i].first<=v[j].first){
+                vec[k++]=v[j++];
             }
-            
             else{
-                
-                count[v[i].second] += right-j+1;
-                temp[k++] = v[i++];
-                
+                count[v[i].second]+=right-j+1;
+                vec[k++]=v[i++];
             }
-            
         }
         
-        
         while(i<=mid){
-            temp[k++] = v[i++];
+            vec[k++]=v[i];
+            i++;
         }
         
         while(j<=right){
-            temp[k++] = v[j++];
+            vec[k++]=v[j];
+            j++;
         }
         
-        for(int i=left;i<=right;i++){
-            v[i] = temp[i-left]; 
+        for(int l=left;l<=right;l++){
+            v[l]=vec[l-left];
         }
-        
     }
     
-    void mergeSort(vector<int> &count, vector<pair<int,int>> &v, int left, int right){
-        
-        
+    void mergeSort(vector<pair<int,int>>&v,vector<int>& count,int left,int right,vector<int>&nums){
         if(left<right){
-            int mid = left + (right-left)/2;
-            mergeSort(count, v, left, mid);
-            mergeSort(count, v, mid+1, right);
-            merge(count, v, left, mid, right);
+            int mid=left+(right-left)/2;
+            mergeSort(v,count,left,mid,nums);
+            mergeSort(v,count,mid+1,right,nums);
+            merge(v,count,left,mid,right,nums);
         }
-        
     }
-    
     vector<int> countSmaller(vector<int>& nums) {
-        int n = nums.size();
-        vector<pair<int,int>> v(n);
-        for(int i=0;i<n;i++){
-            pair<int, int> p;
-            p.first = nums[i];
-            p.second = i;
-            v[i] = p;
+        int n=nums.size();
+        vector<pair<int,int>>v(n);
+        vector<int>count(n,0);
+        for(int i=0;i<nums.size();i++){
+            v[i]={nums[i],i};
         }
         
-        
-        vector<int> count(n, 0);
-        mergeSort(count, v, 0, n-1);
+        mergeSort(v,count,0,n-1,nums);
+       // vector<int>count(n);
         return count;
-        
     }
 };
