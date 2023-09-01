@@ -1,29 +1,42 @@
 class Solution {
 public:
-   
+    
+    string fun(string &s){
+        
+       queue<pair<int,int>>q;
+        
+        for(int i=0;i<s.size();i++){
+            
+           int val=(s[i]-'0');
+           int count=1;
+            
+           while(i<s.size()-1 && s[i]==s[i+1]) {
+               count++;
+               i++;
+           }
+            
+           q.push({count,val}) ;
+        }
+        
+        
+        string str="";
+        
+        while(!q.empty()){
+            auto x=q.front();
+            q.pop();
+            str+=to_string(x.first);
+            str+=to_string(x.second);
+        }
+        
+        return str;
+    }
     
     string countAndSay(int n) {
-        if(n==0)return "";
         string ans="1";
         
-        while(--n){
+        for(int i=1;i<n;i++){
             
-            string str="";
-            
-            for(int i=0;i<ans.size();i++){
-            
-             
-               int count=1;
-
-               while(i<ans.size()-1 && ans[i]==ans[i+1]) {
-                   count++;
-                   i++;
-               }
-            
-                str+=to_string(count);
-                str+=ans[i];
-            }
-    
+            string str=fun(ans);
             ans=str;
         }
         
