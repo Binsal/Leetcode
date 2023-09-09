@@ -97,19 +97,18 @@ struct Node {
 class Solution
 {
     public:
-    void inorder(Node*root,vector<int>&v){
-        if(!root){
-            return ;
-        }
-        inorder(root->left,v);
-        v.push_back(root->data);
-        inorder(root->right,v);
-    }
+     vector<int>v;
+     
+     void rec(Node *root){
+         if(!root)return ;
+         rec(root->right);
+         v.push_back(root->data);
+         rec(root->left);
+     }
     int kthLargest(Node *root, int K)
     {
-        vector<int>v;
-        inorder(root,v);
-        return (v[v.size()-K]);
+       rec(root);
+       return v[K-1];
     }
 };
 
