@@ -7,6 +7,7 @@ public:
         for(int i=0;i<=rowIndex;i++){
             ans.push_back(val);
             val=val*(rowIndex-i)/(i+1);
+            cout<<val<<endl;
         }
         
         return ans;
